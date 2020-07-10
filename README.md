@@ -1,2 +1,2 @@
-# hangman
-Hangman for the command line
+# Hangman
+Hangman for the command line 😃
