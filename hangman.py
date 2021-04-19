@@ -1,12 +1,16 @@
 import random
-from random_word import RandomWords
-r = RandomWords()
+import urllib.request
+from visuals import HANGMANPICS
 
-# Store words that the computer will use in a list
-word_choices = ['test']
+
+#Url to grab words
+words_url = "https://www.mit.edu/~ecprice/wordlist.10000"
+response = urllib.request.urlopen(words_url)
+text = response.read().decode()
+word_choices = text.splitlines()
 # Choose random word from list
-# word_to_guess = random.choice(word_choices)
-word_to_guess = r.get_random_word()
+word_to_guess = word_choices[int(random. random() * len(word_choices)-1)]
+
 
 # Split the letters of the random word into list items
 word_to_guess_lst = list(word_to_guess)
@@ -16,8 +20,8 @@ board = []
 game_on = True
 
 
-# Function that determines if player has won
 
+# Function that determines if player has won
 def game_over(board, word):
     if ''.join(board) == word_to_guess:
         choice = input('You won!\nPlay again: Y/N: ')
@@ -56,6 +60,7 @@ def main_game():
                 for i in positions:
                     board[i] = guess
             else:
+                print(HANGMANPICS[chances])
                 print('Sorry, try again')
             show_board()
             if game_over(board, word_to_guess):
