@@ -1,24 +1,23 @@
 import random
 import urllib.request
 from visuals import HANGMANPICS
+from word_lists import *
 
-
-#Url to grab words
-words_url = "https://www.mit.edu/~ecprice/wordlist.10000"
-response = urllib.request.urlopen(words_url)
-text = response.read().decode()
-word_choices = text.splitlines()
-# Choose random word from list
-word_to_guess = word_choices[int(random. random() * len(word_choices)-1)]
-
-
-# Split the letters of the random word into list items
-word_to_guess_lst = list(word_to_guess)
 
 board = []
-
 game_on = True
 
+
+difficulty = input("What level difficulty do you want to play on? \nEasy \nMedium \nAdvanced \nDifficulty: ")
+while difficulty not in ['easy','medium','advanced']:
+    difficulty = input("What level difficulty do you want to play on? \nEasy \nMedium \nAdvanced \nDifficulty: ")
+else:
+    if difficulty == 'easy':
+        word_to_guess = EASY[int(random. random() * len(EASY)-1)]
+    elif difficulty == 'medium':
+        word_to_guess = MEDIUM[int(random. random() * len(MEDIUM)-1)]
+    elif difficulty == 'advanced':
+        word_to_guess = ADVANCED[int(random. random() * len(ADVANCED)-1)]
 
 
 # Function that determines if player has won
@@ -33,7 +32,6 @@ def game_over(board, word):
 
 
 # Visual representation of the word spaces on the command line.
-
 def reset_board():
     board.clear()
     length_of_board = len(word_to_guess)
@@ -54,13 +52,13 @@ def main_game():
             print('Guess cannot be blank.')
         else:
             # Used enumurate and list comprehension to grab  the position of the matches
+            print(HANGMANPICS[chances])
             positions = [index for index, char in enumerate(word_to_guess) if guess == char]
             if guess in word_to_guess:
                 print('Correct!')
                 for i in positions:
                     board[i] = guess
             else:
-                print(HANGMANPICS[chances])
                 print('Sorry, try again')
             show_board()
             if game_over(board, word_to_guess):
