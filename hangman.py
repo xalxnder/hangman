@@ -28,7 +28,7 @@ def game_over(board, word):
             return True
 
 
-# Visual representation of the word spaces on teh command line.
+# Visual representation of the word spaces on the command line.
 
 def reset_board():
     board.clear()
